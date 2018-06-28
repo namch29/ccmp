@@ -23,13 +23,6 @@ import os
 import random
 import time
 
-# Cisco Reference bandwidth = 1 Gbps
-REFERENCE_BW = 10000000
-
-DEFAULT_BW = 10000000
-
-MAX_PATHS = 2
-
 read_file_path="data-10-nodes-result-paths.txt"
 
 class ProjectCCMP(app_manager.RyuApp):
