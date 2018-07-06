@@ -186,7 +186,7 @@ class ProjectCCMP(app_manager.RyuApp):
                 )
 
                 out_ports = ports[in_port]
-                print "path:", path, " node:",node," outport:", out_ports
+                print "Node:",node," outport:", out_ports
 
                 if len(out_ports) > 1:
                     group_id = None
