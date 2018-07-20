@@ -40,3 +40,14 @@ II. Build Open VSwitch từ source code.
         c2cf3eb0-7da1-457c-8664-99264d79afc7
           Manager "ptcp:6640"
           ovs_version: "2.9.2"
+
+==================================================================
+Plot from iperf results:
+1) Get desired data from file: 
+    cat result |grep KBytes |tr - " " |awk '{print $4,$11}'| head -n20 > plotdata
+2) Plot using GNUPLOT
+
+==================================================================
+Run Sflow-rt:
+1) Run:     ./start.sh
+2) sudo mn --custom extras/sflow.py --custom abileneTopo.py --topo abilene --controller remote --mac
