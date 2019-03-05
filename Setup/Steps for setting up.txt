@@ -1,0 +1,50 @@
+1. Install mininet
+2. Install custom OpenVswitch:
+
+  I. Uninstall OVS: apt-get remove openvswitch-common openvswitch-datapath-dkms openvswitch-controller openvswitch-pki openvswitch-      switch
+
+  II. Build Open VSwitch từ source code.
+
+      1. Cài đặt các dependencies:    apt install gcc autoconf automake libtool make -y
+
+      2. Clone mã nguồn từ Git:       git clone https://github.com/openvswitch/ovs
+
+      3. Bootstrap Openvswitch (Neu down .tar thi khong can buoc nay):
+        cd ovs
+        ./boot.sh
+
+      4. Configure:                ./configure --prefix=/usr --localstatedir=/var --sysconfdir=/etc
+
+      5. Install:
+        make
+        make install
+
+      6. Enable module openvswitch:             modprobe openvswitch
+
+      7. Start OvS (everytime reboot OS):       /usr/share/openvswitch/scripts/ovs-ctl start
+
+      8. Let's Check:                           ovs-vsctl show
+
+          Example: c2cf3eb0-7da1-457c-8664-99264d79afc7 Manager "ptcp:6640" ovs_version: "2.9.2"
+
+3. Test multipath:
+  - Using fourNodes.py and run ovs_commands
+  - Check log to confirm custom openVswitch is working:
+      $ sudo ovs-appctl vlog/list 
+      $ sudo ovs-appctl vlog/set ofproto_dpif_xlate:file:dbg
+      open file: /var/log/openvswitch/ovs-vswitchd.log
+  
+  - Check multipath on vswitch:
+      ovs-ofctl -O OpenFlow13 dump-flows s1
+      ovs-ofctl -O OpenFlow13 dump-ports s1
+      ovs-ofctl -O OpenFlow13 dump-groups s1
+  
+    
+4. More steps:
+    4.1. Plot from iperf results:
+        a) Get desired data from file: cat result |grep KBytes |tr - " " |awk '{print $4,$11}'| head -n20 > plotdata
+        b) Plot using GNUPLOT
+
+    4.2. Run Sflow-rt:
+        Run: ./start.sh
+        sudo mn --custom extras/sflow.py --custom abileneTopo.py --topo abilene --controller remote --mac
